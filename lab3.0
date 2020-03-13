@@ -1,0 +1,101 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+typedef struct{
+    struct Vert *cima;
+    struct Vert *baixo;
+    struct Vert *direita;
+    struct Vert *esquerda;
+    int lmax;
+}Vert;
+
+
+void setag(char **lab, int m, int n){
+int i,j;
+    Vert **grafo;
+
+     grafo=(Vert**)malloc(n*sizeof(Vert*));
+    for(i=0;i<m;i++){
+        grafo[i]=(Vert*)malloc(sizeof(Vert));
+    }
+
+   for(i=0;i<n;i++){
+        for(j=0;j<m;j++){
+            if(lab[i][j]=='.'){
+                if(j!=0){
+                    if(lab[i][j-1]!='#'){
+                        grafo[i][j-1].direita=&grafo[i][j];
+                        grafo[i][j].esquerda=&grafo[i][j-1];
+                    }else{
+                        grafo[i][j].esquerda=NULL;
+                    }
+                    if(i!=0){
+                        if(lab[i-1][j]!='#'){
+                            grafo[i-1][j].baixo=&grafo[i][j];
+                            grafo[i][j].cima=&grafo[i-1][j];
+                    }else{
+                        grafo[i][j].cima=NULL;
+                    }
+
+
+
+                    }
+
+                }
+
+            }
+        }
+    }/*
+    for(i=0;i<n;i++){
+        for(j=0;j<m;j++){
+
+            printf("%c",grafo[i][j].simb);
+            if(grafo[i][j-1].direita != NULL && grafo[i][j].esquerda!= NULL ){
+                printf("-");
+            }
+        }
+        if(grafo[i-1][j].baixo != NULL && grafo[i][j].cima!= NULL ){
+                printf("|");
+            }
+
+        printf("\n");
+    }
+*/
+}
+
+int main(){
+    char **lab;
+    int m,n,i,j;
+    Vert *ant,*aux1;
+    scanf("%d %d", &n,&m);
+    //restricao
+
+
+    lab=(char**)malloc(n*sizeof(char*));
+    for(i=0;i<m;i++){
+        lab[i]=(char*)malloc(sizeof(char));
+    }
+
+
+
+
+    for(i=0;i<n;i++){
+        for(j=0;j<m;j++){
+            scanf("%s",&lab[i][j]);
+        }
+    }
+
+
+    setag(lab, m,n);
+
+
+    for(i=0;i<n;i++){
+        for(j=0;j<m;j++){
+
+            printf("%c",lab[i][j]);
+        }
+        printf("\n");
+    }
+
+}
