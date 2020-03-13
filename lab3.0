@@ -23,14 +23,15 @@ int i,j;
    for(i=0;i<n;i++){
         for(j=0;j<m;j++){
             if(lab[i][j]=='.'){
-                if(j!=0){
+                if(j>0){
                     if(lab[i][j-1]!='#'){
                         grafo[i][j-1].direita=&grafo[i][j];
                         grafo[i][j].esquerda=&grafo[i][j-1];
                     }else{
                         grafo[i][j].esquerda=NULL;
                     }
-                    if(i!=0){
+                    }
+                    if(i>0){
                         if(lab[i-1][j]!='#'){
                             grafo[i-1][j].baixo=&grafo[i][j];
                             grafo[i][j].cima=&grafo[i-1][j];
@@ -42,26 +43,27 @@ int i,j;
 
                     }
 
-                }
+
 
             }
         }
-    }/*
+    }
     for(i=0;i<n;i++){
         for(j=0;j<m;j++){
 
-            printf("%c",grafo[i][j].simb);
+          printf("%c",lab[i][j]);
             if(grafo[i][j-1].direita != NULL && grafo[i][j].esquerda!= NULL ){
                 printf("-");
-            }
+            }/*
         }
         if(grafo[i-1][j].baixo != NULL && grafo[i][j].cima!= NULL ){
                 printf("|");
-            }
+*/            }
 
         printf("\n");
     }
-*/
+    printf("\n\n");
+
 }
 
 int main(){
