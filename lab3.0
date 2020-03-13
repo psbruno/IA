@@ -16,34 +16,22 @@ int i,j;
     Vert **grafo;
 
      grafo=(Vert**)malloc(n*sizeof(Vert*));
+
     for(i=0;i<m;i++){
         grafo[i]=(Vert*)malloc(sizeof(Vert));
+    }
+    for(i=0;i<n;i++){
+              for(j=0;j<m;j++){
+                grafo[i]->baixo= NULL;
+                grafo[i]->cima=NULL;
+                grafo[i]->direita=NULL;
+                grafo[i]->esquerda=NULL;
+              }
     }
 
    for(i=0;i<n;i++){
         for(j=0;j<m;j++){
-            if(lab[i][j]=='.'){
-                if(j>0){
-                    if(lab[i][j-1]!='#'){
-                        grafo[i][j-1].direita=&grafo[i][j];
-                        grafo[i][j].esquerda=&grafo[i][j-1];
-                    }else{
-                        grafo[i][j].esquerda=NULL;
-                    }
-                    }
-                    if(i>0){
-                        if(lab[i-1][j]!='#'){
-                            grafo[i-1][j].baixo=&grafo[i][j];
-                            grafo[i][j].cima=&grafo[i-1][j];
-                    }else{
-                        grafo[i][j].cima=NULL;
-                    }
-
-
-
-                    }
-
-
+            if(lab[i][j+1]!='#' && j+1<m){
 
             }
         }
@@ -51,8 +39,8 @@ int i,j;
     for(i=0;i<n;i++){
         for(j=0;j<m;j++){
 
-          printf("%c",lab[i][j]);
-            if(grafo[i][j-1].direita != NULL && grafo[i][j].esquerda!= NULL ){
+         // printf("%c",lab[i][j]);
+            if(grafo[i][j-1].direita !=NULL){
                 printf("-");
             }/*
         }
