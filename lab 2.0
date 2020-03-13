@@ -1,79 +1,56 @@
 #include <stdio.h>
-
+#include <stdlib.h>
+#include <string.h>
 
 typedef struct{
     struct Vert *cima;
     struct Vert *baixo;
     struct Vert *direita;
     struct Vert *esquerda;
-    int max,auxm;
+    int lmax;
+    char simb;
 }Vert;
 
-typedef Vert *ind0;
-
-
-vert criav(char mat[][], int i, int j){
-    Vert *aux;
-    
-    aux=(Vert *)malloc(sizeof(Vert));
-    
-    if(mat[i+1][j]=="."){
-        aux->direita=criav(mat,i+1,j);
-    }
-    if(mat[i-1][j]=="."){
-        aux->esquerda=criav(mat,i-1,j);
-    }
-    if(mat[i][j+1]=="."){
-        aux->baixo=criav(mat,i,j+1);
-    }
-    if(mat[i][j-1]=="."){
-        aux->cima=criav(mat,i,j-1);
-    }
-
-
-}
-
-vert transforma(char mat[][],int n,int m){
-    int i,j;
-    Vert *aux,*pos0;
-    
-    for(i=0;i<n;i++){
-        for(j=0;j<m;j++){
-            if(mat[i][j]=="."){
-                aux=criav(mat,i,j);
-                setav(aux)
-            }
-    
-        }
-        
-    }    
-    
-    
-}
 
 int main(){
+    char Aux;
     int m,n,i,j;
-    Vert *grafo;
+    Vert **grafo,*ant;
     scanf("%d %d", &n,&m);
     //restricao
 
-    char mat[m][n];
 
+    grafo=(Vert**)malloc(n*sizeof(Vert*));
     for(i=0;i<m;i++){
-        for(j=0;j<n;j++){
-            scanf("%s",&mat[i][j]);
+        grafo[i]=(Vert*)malloc(sizeof(Vert));
+    }
+
+
+
+
+    for(i=0;i<n;i++){
+        for(j=0;j<m;j++){
+            scanf("%s",grafo[i][j].simb);
+            if(grafo[i][j].simb=='.'){
+                if(j!=0){
+                    if(grafo[i][j-1].simb!='#'){
+                        grafo[i][j-1].direita= grafo[i][j];
+                    }
+                }
+            ant=*grafo;
+            }
         }
     }
-    
-    transforma(mat,n,m);
 
 
-    /*for(i=0;i<n;i++){
+
+
+    for(i=0;i<n;i++){
         for(j=0;j<m;j++){
 
-            printf("%c",mat[i][j]);
+            printf("%c",grafo[i][j].simb);
         }
         printf("\n");
-    }*/
+    }
 
 }
