@@ -15,7 +15,7 @@ typedef struct{
 int main(){
     char Aux;
     int m,n,i,j;
-    Vert **grafo,*ant;
+    Vert **grafo,*ant,*aux1;
     scanf("%d %d", &n,&m);
     //restricao
 
@@ -34,8 +34,9 @@ int main(){
             if(grafo[i][j].simb=='.'){
                 if(j!=0){
                     if(grafo[i][j-1].simb!='#'){
-                        grafo[i][j-1].direita= grafo[i][j];
+                        grafo[i][j-1].direita=&grafo[i][j];
                     }
+
                 }
             ant=*grafo;
             }
