@@ -1,0 +1,43 @@
+Vert *aux;
+    printf("ponto atual: lab[%d][%d], TL %d TC %d\n",i,j,TL,TC);
+
+    if(lab[i][j+1]=='.' && P0->direita==NULL){//ponto a direita
+        P0->verific++;
+        P0->lmax++;
+        aux=Aloca();
+        P0->direita=aux;
+        //aux->verific++;
+        aux->esquerda=P0;
+        //printf("Vertice a direita\n");
+        P0->lmax+=CriaA(aux,lab,i,j+1,TL,TC);
+        printf("%d",P0->lmax);
+    }
+    if(lab[i][j-1]=='.' && P0->esquerda==NULL){//ponto a esquerda
+        P0->verific++;
+        P0->lmax++;
+        aux=Aloca();
+        P0->esquerda=aux;
+        aux->direita=P0;
+        //printf("Vertice a esquerda\n");
+        P0->lmax+=CriaA(aux,lab,i,j-1,TL,TC);
+    }
+    if(lab[i+1][j]=='.'&& P0->baixo==NULL){//ponto abaixo
+        P0->verific++;
+        P0->lmax++;
+        aux=Aloca();
+        P0->baixo=aux;
+        aux->cima=P0;
+        //printf("Vertice abaixo\n");
+        P0->lmax+=CriaA(aux,lab,i+1,j,TL,TC);
+    }
+    if(lab[i-1][j]=='.' && P0->cima==NULL){// ponto em cima
+        P0->verific++;
+        P0->lmax++;
+        aux=Aloca();
+        P0->cima=aux;
+        aux->baixo=P0;
+        //printf("Vertice em cima\n");
+        P0->lmax+=CriaA(aux,lab,i-1,j,TL,TC);
+    }
+    //printf("voltou da recursao %d %d\n\n",i,j);
+    return P0->lmax;
