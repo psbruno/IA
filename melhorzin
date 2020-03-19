@@ -8,6 +8,7 @@ typedef struct{
     struct Vert *direita;
     struct Vert *esquerda;
     int lmax;
+    int max;
     int verific;
 }Vert;
 
@@ -18,59 +19,82 @@ fcv Aloca(){
 
     vertice->lmax=0;
     vertice->baixo=NULL;
-    vertice->baixo=NULL;
+    vertice->cima=NULL;
     vertice->direita=NULL;
     vertice->esquerda=NULL;
     vertice->verific=0;
-
+    vertice->max=0;
     return vertice;
 }
 
 Vert CriaA(Vert *P0,Vert *PAtual,char **lab,int i,int j,int TL,int TC){
      printf("analisando lab[%d][%d]",i,j);
+
      if(PAtual->verific!=0 || i+1==TL||j+1==TC){
-        printf("volta\n");
+
+        PAtual->verific=0;
+        //printf("volta ---- max:%d max: %d\n\n",P0->lmax,P0->max);
         return;
     }
     Vert *Aux=Aloca();
-     if(lab[i][j+1]=='.' && PAtual->direita==NULL){//ponto a direita
+     if(lab[i][j+1]=='.' && PAtual->direita==NULL && PAtual->verific==0){//ponto a direita
         printf("vert a direita\n");
         P0->lmax++;
         PAtual->verific++;
         PAtual->direita=Aux;
         Aux->esquerda=PAtual;
         CriaA(P0,Aux,lab,i,j+1,TL,TC);
-        printf("voltou para lab[%d][%d]\n",i,j);
+        if((P0->max)<(P0->lmax)){
+            P0->max=P0->lmax;
+        }
+        printf("voltou para lab[%d][%d]  ------ max: %d lmax:%d \n",i,j,P0->max, P0->lmax);
+        P0->lmax--;
      }
-     if(j>0 && lab[i][j-1]=='.' && PAtual->esquerda==NULL){//ponto a esquerda
+     if(j>0 && lab[i][j-1]=='.' && PAtual->esquerda==NULL && PAtual->verific==0){//ponto a esquerda
         printf("vert a esquerda\n");
         P0->lmax++;
         PAtual->verific++;
         PAtual->esquerda=Aux;
         Aux->direita=PAtual;
         CriaA(P0,Aux,lab,i,j-1,TL,TC);
-        printf("voltou para lab[%d][%d]\n",i,j);
+        if(P0->lmax>P0->max){
+            P0->max=P0->lmax;
+        }
+        printf("voltou para lab[%d][%d] ------ max: %d lmax:%d \n",i,j,P0->max, P0->lmax);
+        P0->lmax--;
+
      }
-    if(lab[i+1][j]=='.'&& PAtual->baixo==NULL){//ponto abaixo
+    if(lab[i+1][j]=='.'&& PAtual->baixo==NULL && PAtual->verific==0){//ponto abaixo
         printf("vert embaixo\n");
         P0->lmax++;
         PAtual->verific++;
         PAtual->baixo=Aux;
         Aux->cima=PAtual;
         CriaA(P0,Aux,lab,i+1,j,TL,TC);
-        printf("voltou para lab[%d][%d]\n",i,j);
+        if((P0->lmax)>(P0->max)){
+            P0->max=P0->lmax;
+        }
+        printf("voltou para lab[%d][%d] ------ max: %d lmax:%d \n",i,j,P0->max, P0->lmax);
+        P0->lmax--;
     }
-    printf("voltou de cima");
-    if(i>0 && lab[i-1][j]=='.' && PAtual->cima==NULL ){// ponto em cima
+    if(i>0 && lab[i-1][j]=='.' && PAtual->cima==NULL && PAtual->verific==0 ){// ponto em cima
         printf("vert acima \n");
         P0->lmax++;
         PAtual->verific++;
         PAtual->cima=Aux;
         Aux->baixo=PAtual;
         CriaA(P0,Aux,lab,i,j+1,TL,TC);
-        printf("voltou para lab[%d][%d]\n",i,j);
+        if((P0->lmax)>(P0->max)){
+        P0->max=P0->lmax;
+        }
+        printf("voltou para lab[%d][%d] ------ max: %d lmax:%d \n",i,j,P0->max, P0->lmax);
+        P0->lmax--;
     }
-    printf("retornou de td\n");
+    PAtual->verific=0;
+    printf("retornou de td-----Lab[%d][%d]\n",i,j);
+    if(PAtual->cima!=NULL){
+        printf("NAO EH NULO==================================================================\n");
+    }
 }
 int BuscaA(char **lab, int TL, int TC){
     int i=0,j=0,k;
@@ -79,16 +103,20 @@ int BuscaA(char **lab, int TL, int TC){
     for(k=0;k<(TL+TC)-1;k++){
         saidas[k].lmax=0;
         saidas[k].baixo=NULL;
-        saidas[k].baixo=NULL;
+        saidas[k].cima=NULL;
         saidas[k].direita=NULL;
         saidas[k].esquerda=NULL;
         saidas[k].verific=0;
+        saidas[k].max=0;
     }
 
-    printf("ponto atual: lab[%d][%d], TL %d TC %d\n",i,j,TL,TC);
+
     for(i=0;i<TL;i++){
          if(lab[i][0]=='.'){
+    printf("---------------------------------vai ser analisado : lab[%d][0]\n",i);
+
             CriaA(&saidas[i],Aloca(),lab,i,j,TL,TC);
+            printf("%d", saidas->max);
         }
     }
 
