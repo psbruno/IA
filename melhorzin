@@ -83,7 +83,7 @@ Vert CriaA(Vert *P0,Vert *PAtual,char **lab,int i,int j,int TL,int TC){
         PAtual->verific++;
         PAtual->cima=Aux;
         Aux->baixo=PAtual;
-        CriaA(P0,Aux,lab,i,j+1,TL,TC);
+        CriaA(P0,Aux,lab,i-1,j,TL,TC);
         if((P0->lmax)>(P0->max)){
         P0->max=P0->lmax;
         }
