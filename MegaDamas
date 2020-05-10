@@ -1,0 +1,130 @@
+#include <stdio.h>
+typedef struct{
+    int l;
+    int c;
+}pecas;
+int PCaptura(int t[4], pecas V,int N, int M,int tab[N][M],int tab2[N][M]){
+    int i,j;
+    if(V.l>N || V.c>M || V.l<0 || V.c<0){
+        return 0;
+    }
+
+
+    if(tab[V.l+1][V.c+1]==2 && tab[V.l+2][V.c+2]==0){//confere se pode capturar abaixo e a direita
+
+        t[0]++;
+        tab[V.l][V.c]=0;
+        tab[V.l+1][V.c+1]=0;
+        tab[V.l+2][V.c+2]=1;
+        V.l+=2;
+        V.c+=2;
+        PCaptura(t,V,N,M,tab,tab);
+
+    }
+    for(i=0;i<N;i++){
+        for(j=0;j<M;j++){
+            tab[i][j]=tab2[i][j];
+        }
+    }
+
+
+    if(tab[V.l+1][V.c-1]==2 && tab[V.l+2][V.c-2]==0){//confere se pode capturar abaixo e a esquerda
+
+        t[1]++;
+        tab[V.l][V.c]=0;
+        tab[V.l+1][V.c-1]=0;
+        tab[V.l+2][V.c-2]=1;
+        V.l+=2;
+        V.c-=2;
+        PCaptura(t,V,N,M,tab,tab);
+
+    }
+    for(i=0;i<N;i++){
+        for(j=0;j<M;j++){
+            tab[i][j]=tab2[i][j];
+        }
+    }
+
+    if(tab[V.l-1][V.c+1]==2 && tab[V.l-2][V.c+2]==0){//confere se pode capturar acima e a direita
+
+        t[2]++;
+        tab[V.l][V.c]=0;
+        tab[V.l-1][V.c+1]=0;
+        tab[V.l-2][V.c+2]=1;
+        V.l-=2;
+        V.c=2;
+        PCaptura(t,V,N,M,tab,tab);
+
+    }
+    for(i=0;i<N;i++){
+        for(j=0;j<M;j++){
+            tab[i][j]=tab2[i][j];
+        }
+    }
+
+    if(tab[V.l-1][V.c-1]==2 && tab[V.l-2][V.c-2]==0){//confere se pode capturar acima e a esquerd
+        t++;
+        tab[V.l][V.c]=0;
+        tab[V.l-1][V.c-1]=0;
+        tab[V.l-2][V.c-2]=1;
+        V.l-=2;
+        V.c-=2;
+        PCaptura(t,V,N,M,tab,tab);
+
+    }
+
+    return 0;
+}
+int mat(int N, int M){
+    int x=0,t[4],i, j,tab2[N][M],tab[N][M];
+    pecas V[M*N/2];
+    for(i=0;i<4;i++){
+        t[i]=0;
+    }
+    for(i=0;i<N;i++){
+        for(j=0;j<M;j++){
+            tab[i][j]=9;
+        }
+    }
+
+    for(i=N-1;i>=0;i--){
+        for(j=0;j<M;j+=2){
+            if(i%2==N%2 && j==0){
+                j++;
+            }
+            scanf("%d", &tab[i][j]);
+            if(tab[i][j]==1){
+                V[x].l=i;
+                V[x].c=j;
+                x++;
+            }
+        }
+    }
+    for(i=0;i<N;i++){
+        for(j=0;j<M;j++){
+            tab2[i][j]=tab[i][j];
+        }
+    }
+    x--;
+    while(x>=0){
+
+        PCaptura(&t,V[x],N,M, tab2,tab);
+        x--;
+    }
+    i=t[1]+t[0]+t[2]+t[3];
+    printf("%d", i);
+    return M+N;
+}
+int main() {
+    int N=1,M=1,i,j;
+
+
+    while(M>0){
+        scanf("%d %d", &N,&M);
+        M=mat(N,M);
+    }
+
+
+
+    return 0;
+}
