@@ -1,3 +1,4 @@
+/*PGcp=Ponteiro Global Com printf)*/
 #include <stdio.h>
 #include <stdlib.h>
 typedef struct{
