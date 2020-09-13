@@ -12,7 +12,7 @@ typedef struct{
     int treino_teste;//1 == treino, 0 == teste
 }TConjunto;
 
-void atribui(TConjunto *Dados){
+void setadados(TConjunto *Dados){
     FILE *iris;
     iris = fopen("iris.txt", "r");
     char texto[50];
@@ -57,7 +57,7 @@ void bubble_sort (int vetor[], int n) {
 }
 int main(){
     TConjunto *Dados=(TConjunto*)malloc(150*sizeof(TConjunto));
-    atribui(Dados);
+    setadados(Dados);
     int Indices[105]={0};
     int i=0,aux;
     for (i = 0; i < 105; i++)
@@ -71,7 +71,7 @@ int main(){
     }
 
 
-    bubble_sort(Indices,105);
+    //bubble_sort(Indices,105);
 
     for (i = 0; i < 105; i++)
         printf("%d ", Indices[i]);
