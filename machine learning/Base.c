@@ -63,20 +63,21 @@ int main(){
     for (i = 0; i < 105; i++)
         Indices[i]=0;
 
-    for (i = 0; i < 105; i++){
+      for (i = 0; i < 45; i++){
         aux=(rand() % 150);
         while(verific(aux,Indices)==0)
             aux=(rand() % 150);
-        Indices[i]= aux;
+        Indices[i]=aux;
+        Dados[aux].treino_teste++;
     }
 
 
     //bubble_sort(Indices,105);
 
-    for (i = 0; i < 105; i++)
+    for (i = 0; i < 45; i++)
         printf("%d ", Indices[i]);
     printf("\n");
     for(i=0;i<150;i++)
-        printf("    %.1f    %.1f    %.1f    %.1f    %s \n", Dados[i].sepal_length,Dados[i].sepal_width,Dados[i].petal_length,Dados[i].sepal_width,Dados[i].species);
+        printf("    %.1f    %.1f    %.1f    %.1f    %s \n", Dados[i].sepal_length,Dados[i].sepal_width,Dados[i].petal_length,Dados[i].petal_width,Dados[i].species);
 
 }
