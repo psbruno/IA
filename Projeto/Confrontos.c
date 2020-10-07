@@ -224,10 +224,15 @@ int main(){
     TNo *Times = (TNo*)malloc(16*sizeof(TNo));
     int i,j;
     carrega(Times);
+
     for(i=0; i<16;i++){
         Times[i].vitorias=0;
-        printf("Time %s Nota %.1f Grupo %c\n", Times[i].time, Times[i].nota, Times[i].grupo);
+         if((i)%4==0)
+            printf("Grupo %c\n", Times[i].grupo);
+        printf("Time: %s  Nota: %.1f \n", Times[i].time, Times[i].nota, Times[i].grupo);
 
+        if((i+1)%4==0)
+            printf("\n\n\n\n\n");
     }
     system("pause");
     system("cls");
